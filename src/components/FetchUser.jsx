@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Typography, CircularProgress, Alert, Paper, List, ListItem, ListItemText } from '@mui/material'
+import { Container, Grid2, Typography, CircularProgress, Card, CardContent, CardHeader } from '@mui/material'
 
 const FetchUser = () => {
     const [users, setUsers] = useState([]);
@@ -28,29 +28,43 @@ const FetchUser = () => {
 
     if(loading)
         return (
-            <Box display={'flex'} justifyContent={'center'} mt={5}>
+            <Container sx={{ textAlign: 'center', mt: 2}}>
                 <CircularProgress />
-            </Box>
+                <Typography variant='h6' sx={{ mt: 2}}>
+                    Loading users...
+                </Typography>
+            </Container>
         );
     
         if(error)
             return(
-            <Box width={'400px'} margin={'50px auto'}>
+            <Container  sx={{ mt: 5}}>
                 <Alert severity='error'>Error loading users</Alert>
-            </Box>
+            </Container>
         );
 
   return (
-    <Box width={'600px'} margin={'50px auto'} padding={'20px'} component={Paper} elevation={3}>
-        <Typography variant='h5' gutterBottom>User List</Typography>
-        <List>
+    <Container sx={{ mt: 5}}>
+        <Typography variant='h4' gutterBottom>User List</Typography>
+        <Grid2 container spacing={3}>
             {users.map((user) => (
-                <ListItem key={user.id} divider>
-                    <ListItemText primary={user.name} secondary={user.email} />
-                </ListItem>
+                <Grid2 key={user.id}>
+                    <Card>
+                        <CardHeader title={user.name} subheader={user.username} />
+                        <CardContent>
+                            <Typography variant='body2' color='textSecondary'> Email: {user.email}</Typography>
+                        </CardContent>
+                        <CardContent>
+                            <Typography variant='body2' color='textSecondary'> Phone: {user.phone}</Typography>
+                        </CardContent>
+                        <CardContent>
+                            <Typography variant='body2' color='textSecondary'> Website: {user.website}</Typography>
+                        </CardContent>
+                    </Card>
+                </Grid2>
             ))}
-        </List>
-    </Box>
+        </Grid2>
+    </Container>
   )
 }
 
